@@ -2,29 +2,41 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Drawing;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
 using Konsthuset.Data;
 using Konsthuset.Models;
+using LazZiya.ImageResize;
+
 
 namespace Konsthuset.Controllers
 {
     public class ArtController : Controller
     {
         private readonly ApplicationDbContext _context;
+        private readonly IWebHostEnvironment _hostEnvironment;
 
-        public ArtController(ApplicationDbContext context)
+        private string? wwwRootPath;
+        /*imagesize settings
+        private int ImageLargeWidth = 1000;
+        private int ImageLargeHeight = 800; */
+
+        public ArtController(ApplicationDbContext context, IWebHostEnvironment hostEnvironment)
         {
             _context = context;
+            _hostEnvironment = hostEnvironment;
+            wwwRootPath = _hostEnvironment.WebRootPath;
         }
 
         // GET: Art
         public async Task<IActionResult> Index()
         {
-              return _context.Artworks != null ? 
-                          View(await _context.Artworks.ToListAsync()) :
-                          Problem("Entity set 'ApplicationDbContext.Artworks'  is null.");
+            return _context.Artworks != null ?
+                        View(await _context.Artworks.ToListAsync()) :
+                        Problem("Entity set 'ApplicationDbContext.Artworks'  is null.");
         }
 
         // GET: Art/Details/5
@@ -56,10 +68,34 @@ namespace Konsthuset.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,ArtName,ArtYear,ArtistName,ArtTechnique,ArtPrice,ArtWidth,ArtHeight")] Artwork artwork)
+        public async Task<IActionResult> Create([Bind("Id,ArtName,ArtYear,ArtistName,ArtTechnique,ArtPrice,ArtWidth,ArtHeight,ImageFile")] Artwork artwork)
         {
             if (ModelState.IsValid)
             {
+                //attached image or not
+                if (artwork.ImageFile != null)
+                {
+                    //save image in wwwroot w 2 new variables to make unique filenames
+                    string fileName = Path.GetFileNameWithoutExtension(artwork.ImageFile.FileName);
+                    string extension = Path.GetExtension(artwork.ImageFile.FileName);
+
+                    //remove space and add timestamp    
+                    artwork.ImageName = fileName = fileName.Replace(" ", String.Empty) + DateTime.Now.ToString("yymmssfff") + extension;
+                    //where to store image    
+                    string path = Path.Combine(wwwRootPath + "/imageupload/", fileName);
+                    //store image
+                    using (var fileStream = new FileStream(path, FileMode.Create))
+                    {
+                        await artwork.ImageFile.CopyToAsync(fileStream);
+                    }
+                    //create miniatures
+                    //CreateImageFiles(fileName);
+                }
+                else
+                {
+                    artwork.ImageName = null;
+                }
+
                 _context.Add(artwork);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
@@ -88,7 +124,7 @@ namespace Konsthuset.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,ArtName,ArtYear,ArtistName,ArtTechnique,ArtPrice,ArtWidth,ArtHeight")] Artwork artwork)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,ArtName,ArtYear,ArtistName,ArtTechnique,ArtPrice,ArtWidth,ArtHeight,ImageName")] Artwork artwork)
         {
             if (id != artwork.Id)
             {
@@ -150,14 +186,24 @@ namespace Konsthuset.Controllers
             {
                 _context.Artworks.Remove(artwork);
             }
-            
+
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
         private bool ArtworkExists(int id)
         {
-          return (_context.Artworks?.Any(e => e.Id == id)).GetValueOrDefault();
+            return (_context.Artworks?.Any(e => e.Id == id)).GetValueOrDefault();
         }
+
+        /*method for imageupload
+        private void CreateImageFiles(string filename)
+        {
+            //create large image
+            using (var img = Image.FromFile(Path.Combine(wwwRootPath + "/imageupload/", filename)))
+            {
+                img.Scale(ImageLargeWidth, ImageLargeHeight).SaveAs(Path.Combine(wwwRootPath + "/imageupload/", "large_" + filename));
+            }
+        }*/
     }
 }
