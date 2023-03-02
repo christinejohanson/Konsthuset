@@ -82,14 +82,14 @@ namespace Konsthuset.Controllers
                     //remove space and add timestamp    
                     artwork.ImageName = fileName = fileName.Replace(" ", String.Empty) + DateTime.Now.ToString("yymmssfff") + extension;
                     //where to store image    
-                    string path = Path.Combine(wwwRootPath + "/imageupload/", fileName);
+                    string path = Path.Combine(wwwRootPath + "./imageupload/", fileName);
                     //store image
                     using (var fileStream = new FileStream(path, FileMode.Create))
                     {
                         await artwork.ImageFile.CopyToAsync(fileStream);
                     }
-                    //create miniatures
-                    //CreateImageFiles(fileName);
+                    /*create miniatures
+                    CreateImageFiles(fileName); */
                 }
                 else
                 {
@@ -124,7 +124,7 @@ namespace Konsthuset.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,ArtName,ArtYear,ArtistName,ArtTechnique,ArtPrice,ArtWidth,ArtHeight,ImageName")] Artwork artwork)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,ArtName,ArtYear,ArtistName,ArtTechnique,ArtPrice,ArtWidth,ArtHeight,ImageFile")] Artwork artwork)
         {
             if (id != artwork.Id)
             {
@@ -196,14 +196,14 @@ namespace Konsthuset.Controllers
             return (_context.Artworks?.Any(e => e.Id == id)).GetValueOrDefault();
         }
 
-        /*method for imageupload
+        /*method for imageupload 
         private void CreateImageFiles(string filename)
         {
             //create large image
             using (var img = Image.FromFile(Path.Combine(wwwRootPath + "/imageupload/", filename)))
             {
-                img.Scale(ImageLargeWidth, ImageLargeHeight).SaveAs(Path.Combine(wwwRootPath + "/imageupload/", "large_" + filename));
+                img.SaveAs(Path.Combine(wwwRootPath + "/imageupload/", "large_" + filename));
             }
-        }*/
+        } */
     }
 }
