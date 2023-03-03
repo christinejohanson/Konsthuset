@@ -1,0 +1,70 @@
+@model IEnumerable<Konsthuset.Models.Artwork>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.ArtName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ArtYear)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ArtistName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ArtTechnique)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ArtPrice)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ArtWidth)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ArtHeight)
+            </th>
+            <th>
+                Uppladdad bild:
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ArtName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ArtYear)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ArtistName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ArtTechnique)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ArtPrice)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ArtWidth)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ArtHeight)
+                </td>
+                <td class="col-sm-10">
+                    <img decoding="async" src="@("~/imageupload/"+item.ImageName)" asp-append-version="true" width="300px"
+                    height="250px" />
+                </td>
+
+            </tr>
+        }
+    </tbody>
+</table>

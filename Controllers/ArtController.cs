@@ -9,8 +9,6 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
 using Konsthuset.Data;
 using Konsthuset.Models;
-using LazZiya.ImageResize;
-
 
 namespace Konsthuset.Controllers
 {
@@ -37,6 +35,14 @@ namespace Konsthuset.Controllers
             return _context.Artworks != null ?
                         View(await _context.Artworks.ToListAsync()) :
                         Problem("Entity set 'ApplicationDbContext.Artworks'  is null.");
+        }
+
+        //GET: Art with no editing options
+        public async Task<IActionResult> List()
+        {
+            return _context.Artworks != null ?
+            View(await _context.Artworks.ToListAsync()) :
+            Problem("Entity set 'ApplicationDbContext.Artworks'  is null.");
         }
 
         // GET: Art/Details/5
@@ -82,7 +88,7 @@ namespace Konsthuset.Controllers
                     //remove space and add timestamp    
                     artwork.ImageName = fileName = fileName.Replace(" ", String.Empty) + DateTime.Now.ToString("yymmssfff") + extension;
                     //where to store image    
-                    string path = Path.Combine(wwwRootPath + "./imageupload/", fileName);
+                    string path = Path.Combine(wwwRootPath + "/imageupload/", fileName);
                     //store image
                     using (var fileStream = new FileStream(path, FileMode.Create))
                     {
@@ -182,6 +188,10 @@ namespace Konsthuset.Controllers
                 return Problem("Entity set 'ApplicationDbContext.Artworks'  is null.");
             }
             var artwork = await _context.Artworks.FindAsync(id);
+            //delete image from wwwroot
+            var imagePath = Path.Combine(_hostEnvironment.WebRootPath, "imageupload", artwork.ImageName);
+            if (System.IO.File.Exists(imagePath))
+                System.IO.File.Delete(imagePath);
             if (artwork != null)
             {
                 _context.Artworks.Remove(artwork);
@@ -196,14 +206,5 @@ namespace Konsthuset.Controllers
             return (_context.Artworks?.Any(e => e.Id == id)).GetValueOrDefault();
         }
 
-        /*method for imageupload 
-        private void CreateImageFiles(string filename)
-        {
-            //create large image
-            using (var img = Image.FromFile(Path.Combine(wwwRootPath + "/imageupload/", filename)))
-            {
-                img.SaveAs(Path.Combine(wwwRootPath + "/imageupload/", "large_" + filename));
-            }
-        } */
     }
 }
