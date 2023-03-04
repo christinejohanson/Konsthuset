@@ -94,8 +94,6 @@ namespace Konsthuset.Controllers
                     {
                         await artwork.ImageFile.CopyToAsync(fileStream);
                     }
-                    /*create miniatures
-                    CreateImageFiles(fileName); */
                 }
                 else
                 {
@@ -188,7 +186,7 @@ namespace Konsthuset.Controllers
                 return Problem("Entity set 'ApplicationDbContext.Artworks'  is null.");
             }
             var artwork = await _context.Artworks.FindAsync(id);
-            //delete image from wwwroot
+            /*delete image from wwwroot */
             var imagePath = Path.Combine(_hostEnvironment.WebRootPath, "imageupload", artwork.ImageName);
             if (System.IO.File.Exists(imagePath))
                 System.IO.File.Delete(imagePath);

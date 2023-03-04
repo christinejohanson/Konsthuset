@@ -9,10 +9,12 @@ header {
 .logotype {
   margin: 0 auto;
   width: 80%;
-  margin-bottom: 5%;
+  margin-bottom: 10%;
 }
 .logotype img {
-width: 100%;
+width: 50%;
+display: block;
+margin: 0 auto;
 }
 .logotype h1 {
   font-family: 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
@@ -28,7 +30,7 @@ footer p {
   line-height: 16px;
 }
 footer {
-  background-color: rgb(73, 72, 72);
+  background-color: #4d4d4d;
   color: white;
   padding: 2%;
 }
@@ -39,6 +41,7 @@ footer {
   margin-top: 5%;
 }
 .about img {
+  display: block;
   margin: 0 auto;
   width: 80%;
 
@@ -49,6 +52,10 @@ margin: 0 auto;
 }
 .container {
     font-family: 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+}
+
+.card {
+  margin: 0 auto;
 }
 
 @media (min-width: 768px) {
@@ -67,5 +74,5 @@ html {
 }
 
 body {
-  margin-bottom: 100px;
+  margin-bottom: 10px;
 }

@@ -8,18 +8,25 @@ namespace Konsthuset.Models
     {
         //vilka properties o data som ska lagras
         public int Id { get; set; }
+        [Required]
         [Display(Name = "Namn på konstverket:")]
         public string? ArtName { get; set; }
+        [Required]
         [Display(Name = "Skapandeår:")]
         public int ArtYear { get; set; }
+        [Required]
         [Display(Name = "Namn på konstnären:")]
         public string? ArtistName { get; set; }
+        [Required]
         [Display(Name = "Teknik:")]
         public string? ArtTechnique { get; set; }
+        [Required]
         [Display(Name = "Pris i kronor:")]
         public int ArtPrice { get; set; }
+        [Required]
         [Display(Name = "Bredd i centimeter:")]
         public int ArtWidth { get; set; }
+        [Required]
         [Display(Name = "Höjd i centimeter:")]
         public int ArtHeight { get; set; }
 
