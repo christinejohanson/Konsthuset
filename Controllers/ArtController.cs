@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
 using Konsthuset.Data;
 using Konsthuset.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Konsthuset.Controllers
 {
@@ -30,6 +31,7 @@ namespace Konsthuset.Controllers
         }
 
         // GET: Art
+        [Authorize]
         public async Task<IActionResult> Index()
         {
             return _context.Artworks != null ?
@@ -46,6 +48,7 @@ namespace Konsthuset.Controllers
         }
 
         // GET: Art/Details/5
+        [Authorize]
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null || _context.Artworks == null)
@@ -64,6 +67,7 @@ namespace Konsthuset.Controllers
         }
 
         // GET: Art/Create
+        [Authorize]
         public IActionResult Create()
         {
             return View();
@@ -74,6 +78,7 @@ namespace Konsthuset.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize]
         public async Task<IActionResult> Create([Bind("Id,ArtName,ArtYear,ArtistName,ArtTechnique,ArtPrice,ArtWidth,ArtHeight,ImageFile")] Artwork artwork)
         {
             if (ModelState.IsValid)
@@ -108,6 +113,7 @@ namespace Konsthuset.Controllers
         }
 
         // GET: Art/Edit/5
+        [Authorize]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null || _context.Artworks == null)
@@ -128,6 +134,7 @@ namespace Konsthuset.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize]
         public async Task<IActionResult> Edit(int id, [Bind("Id,ArtName,ArtYear,ArtistName,ArtTechnique,ArtPrice,ArtWidth,ArtHeight,ImageFile")] Artwork artwork)
         {
             if (id != artwork.Id)
@@ -159,6 +166,7 @@ namespace Konsthuset.Controllers
         }
 
         // GET: Art/Delete/5
+        [Authorize]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null || _context.Artworks == null)
@@ -179,6 +187,7 @@ namespace Konsthuset.Controllers
         // POST: Art/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
+        [Authorize]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             if (_context.Artworks == null)
