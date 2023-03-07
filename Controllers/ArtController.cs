@@ -19,9 +19,6 @@ namespace Konsthuset.Controllers
         private readonly IWebHostEnvironment _hostEnvironment;
 
         private string? wwwRootPath;
-        /*imagesize settings
-        private int ImageLargeWidth = 1000;
-        private int ImageLargeHeight = 800; */
 
         public ArtController(ApplicationDbContext context, IWebHostEnvironment hostEnvironment)
         {
@@ -79,7 +76,7 @@ namespace Konsthuset.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize]
-        public async Task<IActionResult> Create([Bind("Id,ArtName,ArtYear,ArtistName,ArtTechnique,ArtPrice,ArtWidth,ArtHeight,ImageFile")] Artwork artwork)
+        public async Task<IActionResult> Create([Bind("Id,ArtName,ArtYear,ArtistName,ArtTechnique,ArtPrice,ArtWidth,ArtHeight,AltText,ImageFile")] Artwork artwork)
         {
             if (ModelState.IsValid)
             {
