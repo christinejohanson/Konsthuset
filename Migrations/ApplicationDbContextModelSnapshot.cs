@@ -23,16 +23,21 @@ namespace Konsthuset.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
+                    b.Property<string>("AltText")
+                        .HasColumnType("TEXT");
+
                     b.Property<int>("ArtHeight")
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("ArtName")
+                        .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.Property<int>("ArtPrice")
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("ArtTechnique")
+                        .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.Property<int>("ArtWidth")
@@ -42,6 +47,7 @@ namespace Konsthuset.Migrations
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("ArtistName")
+                        .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.Property<string>("ImageName")

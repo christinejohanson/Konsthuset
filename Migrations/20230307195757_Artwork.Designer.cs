@@ -11,8 +11,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Konsthuset.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20230228165553_Image")]
-    partial class Image
+    [Migration("20230307195757_Artwork")]
+    partial class Artwork
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -26,16 +26,21 @@ namespace Konsthuset.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
+                    b.Property<string>("AltText")
+                        .HasColumnType("TEXT");
+
                     b.Property<int>("ArtHeight")
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("ArtName")
+                        .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.Property<int>("ArtPrice")
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("ArtTechnique")
+                        .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.Property<int>("ArtWidth")
@@ -45,6 +50,7 @@ namespace Konsthuset.Migrations
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("ArtistName")
+                        .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.Property<string>("ImageName")
