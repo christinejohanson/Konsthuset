@@ -33,7 +33,8 @@ namespace Konsthuset.Models
         //lagras i db.
         [Display(Name = "Filnamn bild:")]
         public string? ImageName { get; set; }
-        [Display(Name = "Alttext för bild")]
+        [Required(ErrorMessage = "Fyll i alt-text")]
+        [Display(Name = "Alt-text för bild")]
         public string? AltText { get; set; }
 
         //lagras i gränssnitt men ej i db

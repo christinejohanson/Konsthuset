@@ -132,7 +132,7 @@ namespace Konsthuset.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,ArtName,ArtYear,ArtistName,ArtTechnique,ArtPrice,ArtWidth,ArtHeight,ImageFile")] Artwork artwork)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,ArtName,ArtYear,ArtistName,ArtTechnique,ArtPrice,ArtWidth,ArtHeight,AltText,ImageName")] Artwork artwork)
         {
             if (id != artwork.Id)
             {

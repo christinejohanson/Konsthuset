@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Konsthuset.Migrations
 {
     /// <inheritdoc />
-    public partial class InitialCreate : Migration
+    public partial class Initialcreate : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -17,13 +17,15 @@ namespace Konsthuset.Migrations
                 {
                     Id = table.Column<int>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
-                    ArtName = table.Column<string>(type: "TEXT", nullable: true),
+                    ArtName = table.Column<string>(type: "TEXT", nullable: false),
                     ArtYear = table.Column<int>(type: "INTEGER", nullable: false),
-                    ArtistName = table.Column<string>(type: "TEXT", nullable: true),
-                    ArtTechnique = table.Column<string>(type: "TEXT", nullable: true),
+                    ArtistName = table.Column<string>(type: "TEXT", nullable: false),
+                    ArtTechnique = table.Column<string>(type: "TEXT", nullable: false),
                     ArtPrice = table.Column<int>(type: "INTEGER", nullable: false),
                     ArtWidth = table.Column<int>(type: "INTEGER", nullable: false),
-                    ArtHeight = table.Column<int>(type: "INTEGER", nullable: false)
+                    ArtHeight = table.Column<int>(type: "INTEGER", nullable: false),
+                    ImageName = table.Column<string>(type: "TEXT", nullable: true),
+                    AltText = table.Column<string>(type: "TEXT", nullable: true)
                 },
                 constraints: table =>
                 {
