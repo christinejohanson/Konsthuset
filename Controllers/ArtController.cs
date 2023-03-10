@@ -44,6 +44,15 @@ namespace Konsthuset.Controllers
             Problem("Entity set 'ApplicationDbContext.Artworks'  is null.");
         }
 
+        //GET: Artist from Artwork
+        public async Task<IActionResult> Artistname()
+        {
+            var artistContext = _context.Artworks.Include(c => c.ArtistName);
+            return _context.Artworks != null ?
+            View(await _context.Artworks.ToListAsync()) :
+            Problem("Entity set 'ApplicationDbContext.Artworks'  is null.");
+        }
+
         // GET: Art/Details/5
         [Authorize]
         public async Task<IActionResult> Details(int? id)

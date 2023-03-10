@@ -1,0 +1,21 @@
+@model IEnumerable<Konsthuset.Models.Artwork>
+
+@{
+    ViewData["Title"] = "Artists";
+}
+<h1>KONSTNÄRER</h1>
+
+<div class="container">
+
+    <tbody>
+        @foreach (var item in Model)
+        {
+
+
+            <h2>
+                @Html.DisplayFor(modelItem => item.ArtistName)
+            </h2>
+
+        }
+    </tbody>
+</div>
